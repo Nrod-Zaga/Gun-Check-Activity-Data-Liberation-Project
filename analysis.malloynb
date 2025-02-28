@@ -1,0 +1,180 @@
+>>>markdown
+
+After reading the README, you should have a brief understanding of the data and what it represents, now lets begin to dive into analysis and insights.
+>>>malloy
+
+source: states is duckdb.table('States.csv') extend {
+    measure: all_cases is sum(cases)
+    primary_key: `date`
+}
+
+source: checks is duckdb.table('nicschecks.csv') extend {
+    dimension: date_of_aquisition is strptime!date(concat(`month`, '-01'), '%Y-%m-%d')
+    dimension: difference_between_hand_and_long is (handgun - long_gun)
+
+    
+}
+
+>>>markdown
+
+## Lets look at what the data contains
+>>>malloy
+# dashboard
+run: checks -> {
+    aggregate: `Total Number of Gun Related Activity` is sum(totals)
+    aggregate: `Total Number of Years of Data` is (count(date_of_aquisition))/12
+    aggregate: `Total Number of US Territories Within Data` is count(state)
+    
+}
+
+>>>markdown
+
+Looking at the distribtuion of Gun Activities within the US territories with shape map and line charts with tooltips with independed Y values outlining the yearly changes. Lets also categorize the data with the three types of guns.
+>>>malloy
+# dashboard
+run: checks -> {
+    # shape_map
+    nest: `United States Map Distribution of Totals` is {
+        group_by: state
+        aggregate: `Total Activity` is sum(totals)
+    }
+    # bar_chart
+    nest: `Summary of Gun Activity` is {
+        group_by: state
+        aggregate: sum_by_state is sum(totals)
+        # tooltip
+        # line_chart {y.independent}
+        nest: `By Year` is {
+            group_by: date_of_aquisition.Year
+            aggregate: `Sum` is sum(totals)
+        }
+    }
+    # bar_chart
+    nest: `Summary of Handgun Activity by State` is {
+        group_by:
+            state
+        aggregate: `Handguns Summed` is sum(handgun)
+            # tooltip
+            # line_chart {y.independent}
+            nest: `By Year` is {
+                group_by: date_of_aquisition.Year
+                aggregate: `Sum` is sum(handgun)
+        }
+        }
+    # bar_chart
+    nest: `Summary of Long Gun Activity by State` is {
+        group_by:
+            state
+        aggregate: `Long Guns Summed` is sum(long_gun)
+        # tooltip
+        # line_chart {y.independent}
+        nest: `By Year` is {
+            group_by: date_of_aquisition.Year
+            aggregate: `Sum` is sum(long_gun)
+        }
+        }
+    # bar_chart
+    nest: `Summary of Other Gun Activity by State` is {
+        group_by:
+            state
+        aggregate: `Other Guns Summed` is sum(other)
+        # tooltip
+        # line_chart {y.independent}
+        nest: `By Year` is {
+            group_by: date_of_aquisition.Year
+            aggregate: `Sum` is sum(other)
+        }
+        }
+    
+}
+>>>markdown
+From this data we can see the many spikes of when guns tend to be bought. We can often see random spikes in random US territories due to legislation changes. One easy to see example of this is the spike at the end of 2012 in nearly every single US territory. At the end of 2012 the tragic Sandy Hook school shooting happened which spurred a lot of new potential legislation changes to increase gun control. Thus, many people went and bought guns while they still could. Another set of interesting spikes come from election years and time leading up to elections. There are also many other spikes that are specific to a US state where state wide legislation change was proposed which spikes gun activity. Another example of a spike that was found in generally every single US territory was in 2020. This was the beginning of COVID-19. Lets look at gun activity side by side with COVID-19 cases next.
+>>>malloy
+# dashboard
+run: checks -> {
+    # line_chart
+    nest: `Total Gun Activity by Month` is {
+        group_by: date_of_aquisition.month
+        aggregate: Totals is sum(totals)
+    }
+}
+# dashboard
+run: states -> {
+    # line_chart
+    nest: `COVID-19 Cases Summed by Month` is {
+    group_by: `date`.month
+    aggregate: `Sum of Cases` is sum(cases)
+    }
+}
+>>>markdown
+You can see through these two charts that there was a large spike in Gun Acitity during the beginning of COVID-19. This is likely due to the extreme uncertainty of the pandemic as everyone did not know what the future held so they got their guns while they still could. 
+>>>malloy
+
+# dashboard
+run: checks -> {
+    nest: `Disparity of Hand Guns and Long Guns by State` is {
+        group_by: state
+        aggregate: sum_of_difference is sum(difference_between_hand_and_long)
+        limit: 100
+    }
+    # bar_chart
+    nest: `Disparity of Hand Guns and Long Guns by State Visually` is {
+        group_by: state
+        aggregate: sum_of_difference is  sum(difference_between_hand_and_long)
+        limit: 100
+    } 
+    
+}
+>>>markdown
+
+Most territories have a small disparity but we can see that Florida has a considerably more handguns being sought after with background checks than long guns, I am not sure why this is. However, on the other side Pennsylvania has considerably more long gun activity. After a quick google search, this makes sense since Pennsylvania is the second most hunted state in America, which generally requires long guns. 
+>>>markdown
+## Looking at Permit Data
+>>>malloy
+# dashboard
+run: checks -> {
+    nest: `Overall Permit Data by State` is {
+        group_by: state
+        aggregate: sum_permit_checks is sum(permit)
+        }
+    nest: `Permit Data by State and By Year` is {
+        group_by: state
+        aggregate: sum_permit_checks is sum(permit)
+        # line_chart { y.independent size=spark}
+        nest: permits_by_year is {
+            group_by: date_of_aquisition.year
+            aggregate: sum_permit_checks is sum(permit)
+
+    }
+    }
+}
+>>>markdown
+From the analysis on Permit checks we can visualize a lot of interesting data. We can see how US territories all began to start checking permits later such as how Kentucky did not begin until 2006. Each state can report and check permits in their own way depending on state legislation.
+>>>markdown
+## Looking at the Other Guns Category
+>>>malloy
+# dashboard
+run: checks -> {
+    aggregate: `Total Other Guns Checked` is sum(other)
+    nest: `Other Guns Checks by State` is {
+        group_by: state
+        aggregate: sum_other is sum(other)
+    }
+        # bar_chart
+        nest: `Other Guns Checks by State Visually with Tooltip by Year` is {
+            group_by: state
+            aggregate: sum_other is sum(other)
+            # line_chart {y.independent}
+            # tooltip
+            nest: `Tooltip by Year` is {
+                group_by: date_of_aquisition.year
+                aggregate: `Sum Other` is sum(other)
+            }
+    }
+
+}
+>>>markdown
+
+Upon further research, the 'other' category consists of guns that dont fall into the other categories. The most common example are assorted types of shotguns. Other than that its guns that have too short a barrel, or a pistol grip assult rifle and other unorthodox guns. Califoria seems to have a lot of gun activity around the other category, upon further research, in December 2016, California experienced a significant spike in gun purchases categorized under the "Other" category due to impending legislative changes. Specifically, California introduced new laws regulating "bullet-button" rifles, which are semi-automatic firearms with magazine release mechanisms designed to comply with earlier state restrictions. These laws would change on January 1st 2017 so many people bought these guns before the legislation change.
+>>>markdown
+# Thank You for Enjoying this Dataset With Me!
