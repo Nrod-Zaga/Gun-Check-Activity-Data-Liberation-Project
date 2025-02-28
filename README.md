@@ -68,4 +68,6 @@ Not all categories of background checks provide a **clear picture** of gun sales
 ![Other Guns with By Year Tooltip](image.png)
 ![Gun Activity Shapemap](image-1.png)
 ![Gun Activity Connection to Covid Pandemic](image-2.png)
+![Permit Data by State and Year](image-3.png)
+![Disparity of Long and Hand Gun Spread](image-4.png)
 
