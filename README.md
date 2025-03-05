@@ -75,6 +75,7 @@ This first visualization presents the total number of background checks for fire
 - **Tooltip:** Displays the total number of "Other" gun background checks for each specific year based on the date of acquisition.  
 
 This allows for both a high-level comparison between states and a more detailed year-over-year trend when hovering over data points.
+
 ![Other Guns with By Year Tooltip](image.png)
 
 
@@ -87,6 +88,7 @@ This next visualization displays the total number of firearm-related background 
 - **Metric:** Sum of all gun-related check activities per state.  
 
 This provides a geographic overview, allowing for quick identification of states with higher or lower firearm background check activity.
+
 ![Gun Activity Shapemap](image-1.png)
 
 
@@ -99,6 +101,7 @@ This visualization presents the total number of COVID-19 cases reported in the U
 - **Visualization Type:** Line chart showing the trend of COVID-19 cases over time  
 
 This data helps illustrate the rise and fall of COVID-19 cases across different months. Additionally, it provides context for analyzing potential connections between the onset of the pandemic and changes in firearm-related background check activities, particularly in early 2020 when uncertainty and public concerns may have influenced gun purchases.
+
 ![Gun Activity Connection to Covid Pandemic](image-2.png)
 
 
@@ -112,6 +115,7 @@ This visualization displays the total number of firearm permit background checks
 - **Nested Data:** Yearly trends of permit background checks per state  
 
 The visualization highlights fluctuations in firearm permit checks over time. Many of the larger spikes in the data can be attributed to legislative changes, as new laws or policy shifts often lead to surges in permit applications. This provides insight into how regulatory changes impact firearm-related background check activity across different states.
+
 ![Permit Data by State and Year](image-3.png)
 
 
@@ -125,5 +129,6 @@ This visualization presents the difference in firearm-related background check a
 - **Metric:** Positive values indicate more handgun-related activity, while negative values suggest higher long gun-related activity  
 
 This chart highlights the disparity in firearm preferences across states, showing whether a state has a stronger association with handgun or long gun background checks. The differences may be influenced by factors such as hunting culture, self-defense trends, or state-specific regulations.
+
 ![Disparity of Long and Hand Gun Spread](image-4.png)
 
