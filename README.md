@@ -65,9 +65,65 @@ Not all categories of background checks provide a **clear picture** of gun sales
 🗺️ **[NICS Participation Map](https://www.fbi.gov/file-repository/nics-participation-map.pdf/view)** – Visual representation of each state's participation level with the NICS.  
 
 # Some Example Visualizations From the Data
+
+### Other Guns Checks by State with Tooltip by Year  
+
+This first visualization presents the total number of background checks for firearms categorized as "Other" across different U.S. states. The data is aggregated by state, showing trends over time.  
+
+- **Y-Axis:** Sum of "Other" category firearm background checks  
+- **X-Axis:** States  
+- **Tooltip:** Displays the total number of "Other" gun background checks for each specific year based on the date of acquisition.  
+
+This allows for both a high-level comparison between states and a more detailed year-over-year trend when hovering over data points.
 ![Other Guns with By Year Tooltip](image.png)
+
+
+### United States Map Distribution of Total Gun-Related Check Activities  
+
+This next visualization displays the total number of firearm-related background check activities across U.S. states using a shape map.  
+
+- **Visualization Type:** Shape map of the United States  
+- **Data Representation:** States are color-coded based on the total number of firearm-related background checks.  
+- **Metric:** Sum of all gun-related check activities per state.  
+
+This provides a geographic overview, allowing for quick identification of states with higher or lower firearm background check activity.
 ![Gun Activity Shapemap](image-1.png)
+
+
+### COVID-19 Cases Summed by Month  
+
+This visualization presents the total number of COVID-19 cases reported in the United States, aggregated by month.  
+
+- **X-Axis:** Months  
+- **Y-Axis:** Total number of COVID-19 cases  
+- **Visualization Type:** Line chart showing the trend of COVID-19 cases over time  
+
+This data helps illustrate the rise and fall of COVID-19 cases across different months. Additionally, it provides context for analyzing potential connections between the onset of the pandemic and changes in firearm-related background check activities, particularly in early 2020 when uncertainty and public concerns may have influenced gun purchases.
 ![Gun Activity Connection to Covid Pandemic](image-2.png)
+
+
+### Permit Data by State and Year  
+
+This visualization displays the total number of firearm permit background checks across U.S. states, broken down by year.  
+
+- **Visualization Type:** Sparkline chart with independent Y-axes for each state  
+- **X-Axis:** Years  
+- **Y-Axis:** Sum of permit-related background checks  
+- **Nested Data:** Yearly trends of permit background checks per state  
+
+The visualization highlights fluctuations in firearm permit checks over time. Many of the larger spikes in the data can be attributed to legislative changes, as new laws or policy shifts often lead to surges in permit applications. This provides insight into how regulatory changes impact firearm-related background check activity across different states.
 ![Permit Data by State and Year](image-3.png)
+
+
+### Disparity of Handguns and Long Guns by State  
+
+This visualization presents the difference in firearm-related background check activities between handguns and long guns across different U.S. states.  
+
+- **Visualization Type:** Bar chart  
+- **X-Axis:** States  
+- **Y-Axis:** Sum of the difference between handgun and long gun background checks  
+- **Metric:** Positive values indicate more handgun-related activity, while negative values suggest higher long gun-related activity  
+
+This chart highlights the disparity in firearm preferences across states, showing whether a state has a stronger association with handgun or long gun background checks. The differences may be influenced by factors such as hunting culture, self-defense trends, or state-specific regulations.
 ![Disparity of Long and Hand Gun Spread](image-4.png)
 
